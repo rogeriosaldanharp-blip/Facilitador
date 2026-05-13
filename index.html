@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gerador de Evoluções Clínicas | Acolher e Cuidar</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="hero">
+      <div class="hero-image" role="img" aria-label="Imagem institucional da clínica"></div>
+      <div class="hero-content">
+        <div class="brand-row">
+          <div class="brand-mark">AC</div>
+          <div>
+            <p class="clinic-name">Acolher e Cuidar</p>
+            <p class="clinic-subtitle">Ferramenta interna da clínica</p>
+          </div>
+        </div>
+
+        <h1>Gerador de Evoluções Clínicas</h1>
+        <p class="hero-text">
+          Registre rapidamente o que foi trabalhado no atendimento e gere uma evolução técnica,
+          breve e pronta para copiar para o sistema oficial.
+        </p>
+
+        <a href="#formulario" class="primary-link">Nova evolução</a>
+      </div>
+    </header>
+
+    <main class="content">
+      <section class="panel info-panel">
+        <h2>Uso rápido</h2>
+        <p>
+          Preencha em palavras simples. O sistema organiza a informação em linguagem clínica,
+          mantendo um texto direto para prontuário.
+        </p>
+      </section>
+
+      <section class="panel form-panel" id="formulario">
+        <div class="section-heading">
+          <div>
+            <p class="overline">Atendimento</p>
+            <h2>Nova evolução</h2>
+          </div>
+          <button type="button" class="ghost-button" id="limparCampos">Limpar</button>
+        </div>
+
+        <form id="evolucaoForm">
+          <div class="form-grid">
+            <label>
+              Nome da criança
+              <input type="text" id="paciente" placeholder="Ex.: Miguel" />
+            </label>
+
+            <label>
+              Profissional
+              <input type="text" id="profissional" placeholder="Ex.: Rogério" />
+            </label>
+
+            <label>
+              Área terapêutica
+              <select id="area">
+                <option value="">Selecione</option>
+                <option>Musicoterapia</option>
+                <option>Terapia Ocupacional</option>
+                <option>Psicologia</option>
+                <option>Fonoaudiologia</option>
+                <option>Psicopedagogia</option>
+                <option>Neuropsicopedagogia</option>
+                <option>Psicomotricidade</option>
+                <option>Fisioterapia</option>
+                <option>Educação Física</option>
+                <option>Arteterapia</option>
+                <option>Equoterapia</option>
+                <option>Nutrição</option>
+              </select>
+            </label>
+
+            <label>
+              Data
+              <input type="date" id="data" />
+            </label>
+          </div>
+
+          <label>
+            Objetivo trabalhado
+            <textarea id="objetivo" placeholder="Ex.: motricidade fina, percepção visual, coordenação olho-mão e permanência na tarefa"></textarea>
+          </label>
+
+          <label>
+            Atividade ou instrumento utilizado
+            <textarea id="atividade" placeholder="Ex.: quebra-cabeça, encaixes, circuito motor, canções estruturadas, jogo simbólico"></textarea>
+          </label>
+
+          <label>
+            Como a criança chegou / comportamento inicial
+            <textarea id="comportamento" placeholder="Ex.: chegou bem, apresentou boa adesão inicial, estava mais agitado, necessitou acolhimento inicial"></textarea>
+          </label>
+
+          <label>
+            Desenvolvimento durante a proposta
+            <textarea id="resposta" placeholder="Ex.: participou da atividade, precisou de redirecionamento, apresentou busca por atenção, concluiu com suporte verbal"></textarea>
+          </label>
+
+          <label>
+            Resultado da sessão
+            <textarea id="observacao" placeholder="Ex.: cumpriu as demandas propostas, manteve melhor permanência, finalizou a atividade com apoio"></textarea>
+          </label>
+
+          <div class="button-row">
+            <button type="button" class="primary-button" id="gerarBreve">Gerar breve</button>
+            <button type="button" class="secondary-button" id="gerarTecnica">Gerar técnica</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel result-panel">
+        <div class="section-heading">
+          <div>
+            <p class="overline">Resultado</p>
+            <h2>Evolução gerada</h2>
+          </div>
+          <button type="button" class="ghost-button" id="copiarTexto">Copiar</button>
+        </div>
+
+        <div id="resultado" class="result-box">
+          A evolução aparecerá aqui após o preenchimento.
+        </div>
+
+        <p class="copy-feedback" id="feedbackCopia"></p>
+      </section>
+
+      <section class="panel examples-panel">
+        <h2>Modelos rápidos</h2>
+        <div class="chips">
+          <button type="button" data-template="motor">Motor amplo</button>
+          <button type="button" data-template="comunicacao">Comunicação</button>
+          <button type="button" data-template="regulacao">Regulação</button>
+          <button type="button" data-template="fina">Motricidade fina</button>
+          <button type="button" data-template="musica">Musicoterapia</button>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>Ferramenta interna para apoio ao registro terapêutico. O texto deve ser revisado pelo profissional antes de ser lançado no sistema oficial.</p>
+    </footer>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
