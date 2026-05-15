@@ -1,13 +1,15 @@
+
 const campos = {
   paciente: document.getElementById("paciente"),
   profissional: document.getElementById("profissional"),
   area: document.getElementById("area"),
   data: document.getElementById("data"),
+  modeloHabilidade: document.getElementById("modeloHabilidade"),
   objetivo: document.getElementById("objetivo"),
   atividade: document.getElementById("atividade"),
   comportamento: document.getElementById("comportamento"),
   resposta: document.getElementById("resposta"),
-  observacao: document.getElementById("observacao"),
+  observacao: document.getElementById("observacao")
 };
 
 const resultado = document.getElementById("resultado");
@@ -15,83 +17,159 @@ const feedbackCopia = document.getElementById("feedbackCopia");
 
 campos.data.valueAsDate = new Date();
 
-const perfisPorArea = {
-  "Musicoterapia": {
-    abertura: "Na Musicoterapia, foi realizada uma proposta mediada por recursos sonoro-musicais",
-    focoPadrao: "atenção compartilhada, imitação, turnos interacionais, participação vocal, exploração instrumental e organização da resposta pela música",
-    meio: "Foram utilizados recursos musicais como mediadores para favorecer engajamento, previsibilidade, interação e participação ativa na atividade.",
-    continuidade: "A continuidade do trabalho deve priorizar a ampliação da participação vocal, corporal ou instrumental, respeitando o tempo de resposta da criança e utilizando pausas intencionais como recurso terapêutico."
+const modelos = {
+  motricidadeFina: {
+    objetivo: "motricidade fina, coordenação manual, controle de preensão, coordenação olho-mão e organização dos movimentos distais",
+    atividade: "atividades manipulativas, encaixes, pintura, recorte, pareamento, prendedores, blocos ou pequenos objetos",
+    comportamento: "apresentou participação compatível com a proposta, necessitando de suporte conforme a complexidade da tarefa",
+    resposta: "realizou etapas da atividade com mediação, sendo observados controle manual, precisão dos movimentos e manutenção da atenção",
+    observacao: "cumpriu parcialmente as demandas propostas, com suporte para organização e finalização da atividade"
   },
-  "Terapia Ocupacional": {
-    abertura: "Na Terapia Ocupacional, foi realizada uma proposta voltada ao desempenho ocupacional e às habilidades necessárias para maior autonomia funcional",
-    focoPadrao: "motricidade fina e ampla, coordenação olho-mão, percepção visual, planejamento motor, processamento sensorial e organização da resposta funcional",
-    meio: "A intervenção considerou o nível de suporte necessário, a qualidade da execução motora, a permanência na tarefa e a funcionalidade da resposta apresentada.",
-    continuidade: "A continuidade do trabalho deve priorizar propostas graduadas, com redução progressiva dos suportes e ampliação da autonomia durante as atividades."
+  motricidadeAmpla: {
+    objetivo: "motricidade ampla, coordenação corporal, equilíbrio, lateralidade, planejamento motor, controle postural, tônus e força",
+    atividade: "circuito motor, obstáculos, deslocamentos, saltos, comandos direcionados, mudanças de direção e atividades corporais guiadas",
+    comportamento: "demonstrou engajamento na proposta, com necessidade de suporte para organização corporal e sequência motora",
+    resposta: "participou do percurso motor, apresentando respostas relacionadas ao equilíbrio, lateralidade, coordenação bilateral e seguimento de comandos",
+    observacao: "cumpriu as demandas motoras com suporte, mantendo participação na sequência proposta"
   },
-  "Psicologia": {
-    abertura: "Na Psicologia, foi realizada uma intervenção voltada aos aspectos comportamentais, emocionais e relacionais observados durante a sessão",
-    focoPadrao: "autorregulação, tolerância à frustração, flexibilidade, vínculo terapêutico, repertório socioemocional e manejo comportamental",
-    meio: "A condução considerou os antecedentes da resposta comportamental, as estratégias de mediação utilizadas e a necessidade de favorecer maior organização diante das demandas.",
-    continuidade: "A continuidade do trabalho deve priorizar previsibilidade, ampliação de repertório adaptativo, elaboração emocional e maior tolerância às transições e demandas."
+  comunicacaoLinguagem: {
+    objetivo: "comunicação funcional, intenção comunicativa, compreensão de comandos, solicitação, imitação verbal e ampliação das respostas comunicativas",
+    atividade: "atividade lúdica mediada com objetos de interesse, turnos de interação, comandos simples, solicitações, nomeação e apoio visual",
+    comportamento: "apresentou variação na iniciativa comunicativa, necessitando de mediação para ampliar intenção, troca e organização da resposta",
+    resposta: "demonstrou respostas comunicativas por vocalizações, fala, gestos, apontar, troca visual, imitação ou uso de recursos alternativos de comunicação",
+    observacao: "apresentou respostas comunicativas com suporte, alcançando parcialmente os objetivos propostos"
   },
-  "Fonoaudiologia": {
-    abertura: "Na Fonoaudiologia, foi realizada uma proposta voltada ao desenvolvimento comunicativo e às habilidades de linguagem",
-    focoPadrao: "comunicação funcional, intenção comunicativa, compreensão verbal, expressão oral, pragmática, troca de turnos e ampliação do repertório comunicativo",
-    meio: "Foram observadas a iniciativa comunicativa, a resposta aos comandos, a clareza das emissões e a necessidade de pistas verbais, visuais ou gestuais.",
-    continuidade: "A continuidade do trabalho deve priorizar o uso funcional da comunicação, a ampliação de vocabulário e a maior intencionalidade nas interações."
+  cognicaoAprendizagem: {
+    objetivo: "cognição, atenção, permanência, pareamento, classificação, memória operacional, sequência lógica, resolução de problemas e pré-requisitos acadêmicos",
+    atividade: "jogos estruturados, pareamentos, encaixes, sequências, categorização, identificação de figuras, comandos graduados e materiais pedagógicos",
+    comportamento: "necessitou de suporte para manutenção do foco, organização da tarefa e continuidade da proposta",
+    resposta: "realizou a atividade com mediação, apresentando respostas relacionadas à atenção, compreensão, discriminação visual e resolução gradual da demanda",
+    observacao: "cumpriu parcialmente as demandas cognitivas, necessitando de suporte para continuidade e finalização da proposta"
   },
-  "Psicopedagogia": {
-    abertura: "Na Psicopedagogia, foi realizada uma proposta direcionada às habilidades cognitivas e aos processos envolvidos na aprendizagem",
-    focoPadrao: "atenção, memória operacional, raciocínio, pareamento, categorização, pré-requisitos acadêmicos, organização do pensamento e resolução de problemas",
-    meio: "A intervenção considerou a compreensão da tarefa, a sustentação atencional, o uso de estratégias de resolução e a resposta às mediações oferecidas.",
-    continuidade: "A continuidade do trabalho deve priorizar atividades graduadas que favoreçam atenção sustentada, autonomia na resolução de tarefas e ampliação dos pré-requisitos para aprendizagem."
+  habilidadesBasicas: {
+    objetivo: "treino de habilidades básicas, seguimento de comandos simples, contato visual funcional, imitação, permanência, espera, solicitação, pareamento e resposta ao nome",
+    atividade: "demandas simples e graduadas, uso de reforçadores, pareamento de estímulos, comandos de uma etapa, treino de imitação, solicitação e permanência na tarefa",
+    comportamento: "apresentou necessidade de mediação para iniciar, manter ou concluir as respostas esperadas",
+    resposta: "realizou etapas da atividade com suporte, sendo observadas respostas relacionadas à atenção compartilhada, seguimento de instruções, imitação, espera e participação funcional",
+    observacao: "cumpriu as demandas com suporte, necessitando de mediação para permanência e conclusão da proposta"
   },
-  "Neuropsicopedagogia": {
-    abertura: "Na Neuropsicopedagogia, foi desenvolvida uma proposta voltada aos processos cognitivos relacionados à aprendizagem",
-    focoPadrao: "funções executivas, atenção sustentada, memória, flexibilidade cognitiva, controle inibitório, organização do pensamento e desempenho em tarefas estruturadas",
-    meio: "Foram observados o tempo de resposta, a manutenção do foco, a necessidade de pistas e a capacidade de reorganização diante de erros.",
-    continuidade: "A continuidade do trabalho deve priorizar funções executivas, planejamento, organização cognitiva e maior independência na realização das atividades."
+  regulacaoSocioemocional: {
+    objetivo: "regulação socioemocional, tolerância à frustração, controle inibitório, espera, flexibilidade comportamental, transição e redução de rigidez",
+    atividade: "atividade estruturada com alternância entre demanda e reforço, combinados claros, previsibilidade, tempo de espera, transições guiadas e redirecionamentos terapêuticos",
+    comportamento: "apresentou necessidade de suporte para lidar com frustrações, aceitar mudanças na proposta, aguardar sua vez ou retomar a atividade",
+    resposta: "foram trabalhadas estratégias para favorecer organização comportamental, aceitação de limites, ampliação da tolerância e retomada da participação",
+    observacao: "retomou a atividade após mediação, cumprindo parcialmente as demandas propostas"
   },
-  "Psicomotricidade": {
-    abertura: "Na Psicomotricidade, foi realizada uma proposta com foco na organização corporal e na relação entre movimento, cognição e expressão",
-    focoPadrao: "esquema corporal, lateralidade, equilíbrio, coordenação global, orientação espacial, ritmo, planejamento motor e controle postural",
-    meio: "Foram observadas a qualidade do movimento, a consciência corporal, o ajuste postural, a resposta aos comandos motores e a organização no espaço.",
-    continuidade: "A continuidade do trabalho deve priorizar atividades corporais estruturadas, ampliando controle motor, lateralidade, equilíbrio e organização espacial."
+  interacaoBrincar: {
+    objetivo: "interação social, brincar compartilhado, turnos de troca, imitação social, reciprocidade, atenção conjunta e participação com o outro",
+    atividade: "brincadeira mediada com jogos de turno, faz de conta, atividades compartilhadas, imitação, troca de objetos e participação conjunta",
+    comportamento: "apresentou necessidade de mediação para manutenção da troca, compartilhamento de materiais, respeito aos turnos e ampliação da participação social",
+    resposta: "participou da proposta com suporte, sendo observadas respostas de aproximação, troca, imitação, atenção compartilhada e maior disponibilidade para interação",
+    observacao: "participou da proposta com suporte, mantendo trocas mediadas durante a atividade"
   },
-  "Fisioterapia": {
-    abertura: "Na Fisioterapia, foi desenvolvida uma proposta voltada à funcionalidade motora e ao aprimoramento dos padrões de movimento",
-    focoPadrao: "controle postural, equilíbrio, marcha, força, mobilidade, coordenação motora, dissociação de movimentos e funcionalidade corporal",
-    meio: "Foram observados alinhamento corporal, estabilidade, resposta ao manejo, tolerância ao exercício, qualidade do movimento e necessidade de suporte físico ou verbal.",
-    continuidade: "A continuidade do trabalho deve priorizar exercícios terapêuticos graduados, com foco em controle postural, mobilidade funcional e melhora progressiva da qualidade motora."
+  integracaoSensorial: {
+    objetivo: "integração sensorial, organização corporal, modulação sensorial e respostas proprioceptivas, vestibulares, táteis, auditivas e visuais",
+    atividade: "atividade sensório-motora com recursos proprioceptivos, vestibulares, táteis e organizadores, respeitando o limiar de resposta da criança",
+    comportamento: "apresentou respostas sensoriais que exigiram ajustes na intensidade, duração e tipo de estímulo oferecido",
+    resposta: "participou das atividades com mediação, sendo observadas respostas relacionadas à organização corporal, busca ou evitação sensorial, atenção e permanência",
+    observacao: "tolerou os estímulos propostos com mediação, mantendo participação parcial na atividade"
   },
-  "Educação Física": {
-    abertura: "Na Educação Física, foi realizada uma proposta corporal estruturada com foco no desenvolvimento motor e na participação em atividades físicas",
-    focoPadrao: "coordenação motora ampla, lateralidade, equilíbrio, agilidade, força, ritmo, seguimento de regras, cooperação e participação em jogos ou circuitos",
-    meio: "Foram observados o engajamento motor, a compreensão das regras, a resposta aos comandos, a interação durante a atividade e a organização corporal na execução dos movimentos.",
-    continuidade: "A continuidade do trabalho deve priorizar atividades motoras com variação de desafios, favorecendo participação, autonomia, seguimento de regras e ampliação das habilidades corporais."
+  autonomiaAVDs: {
+    objetivo: "autonomia funcional, atividades de vida diária, participação nas rotinas, independência em tarefas, organização sequencial e redução de suporte",
+    atividade: "treino funcional de alimentação, higiene, vestir-se, organização de materiais, rotina, desfralde ou outras demandas de vida diária",
+    comportamento: "necessitou de suporte para iniciar, organizar ou concluir etapas da tarefa",
+    resposta: "realizou etapas da atividade com mediação, sendo observadas autonomia, participação ativa, sequência da tarefa e tolerância às demandas funcionais",
+    observacao: "realizou a tarefa com suporte, concluindo parcialmente as etapas propostas"
   },
-  "Arteterapia": {
-    abertura: "Na Arteterapia, foi conduzida uma proposta expressiva utilizando recursos artísticos como mediadores do processo terapêutico",
-    focoPadrao: "expressão emocional, criatividade, planejamento da ação, coordenação manual, simbolização, escolha de materiais e elaboração da experiência vivida",
-    meio: "Foram observados o modo de exploração dos materiais, a iniciativa criativa, a tolerância ao processo, a organização da produção e a expressão de conteúdos emocionais ou simbólicos.",
-    continuidade: "A continuidade do trabalho deve priorizar propostas expressivas que favoreçam elaboração, autonomia na escolha dos materiais, ampliação do repertório criativo e organização emocional."
-  },
-  "Equoterapia": {
-    abertura: "Na Equoterapia, foi realizada uma intervenção mediada pelo cavalo, considerando os aspectos motores, sensoriais, emocionais e relacionais envolvidos na prática",
-    focoPadrao: "controle postural, equilíbrio, coordenação, integração sensorial, vínculo, segurança corporal, atenção compartilhada e seguimento de comandos",
-    meio: "Foram observados ajustes posturais, resposta ao movimento tridimensional do cavalo, tolerância sensorial, participação na condução da atividade e necessidade de suporte da equipe.",
-    continuidade: "A continuidade do trabalho deve priorizar propostas graduadas no contexto equoterapêutico, favorecendo segurança, postura, vínculo, atenção e maior participação ativa."
-  },
-  "Nutrição": {
-    abertura: "Na Nutrição, foi realizada uma abordagem voltada à relação da criança com a alimentação e aos aspectos envolvidos no repertório alimentar",
-    focoPadrao: "aceitação alimentar, aproximação gradual dos alimentos, seletividade, tolerância sensorial, autonomia alimentar e rotina de alimentação",
-    meio: "Foram observados sinais de aceitação, recusa, exploração sensorial, resposta à mediação, tolerância à presença do alimento e participação nas etapas propostas.",
-    continuidade: "A continuidade do trabalho deve priorizar aproximação gradual e respeitosa dos alimentos, favorecendo ampliação do repertório alimentar, autonomia e melhor relação com o momento da alimentação."
+  expressaoMusicalCorporal: {
+    objetivo: "expressão musical, corporal e criativa, ritmo, pulso, imitação rítmica, expressão vocal, escuta ativa, canto e participação corporal",
+    atividade: "canções estruturadas, instrumentos musicais, jogos rítmicos, pausas intencionais, imitação sonora, movimentos corporais e propostas expressivas guiadas",
+    comportamento: "apresentou resposta aos estímulos musicais e expressivos, com necessidade de mediação para manutenção da proposta",
+    resposta: "demonstrou engajamento por meio de respostas vocais, corporais, rítmicas, instrumentais ou expressivas",
+    observacao: "participou da proposta musical com suporte, apresentando respostas compatíveis com os objetivos trabalhados"
   }
 };
 
+const fechamentosTecnicos = {
+  motricidadeFina: "A intervenção favoreceu componentes relacionados à coordenação manual, preensão, precisão motora, controle de força, coordenação olho-mão e manipulação funcional dos materiais, com foco na melhora da qualidade dos movimentos finos e na ampliação da autonomia durante as tarefas.",
+  motricidadeAmpla: "A proposta favoreceu componentes relacionados à organização corporal, coordenação motora ampla, lateralidade, equilíbrio, controle postural e planejamento motor, considerando a necessidade de ampliar a segurança nos deslocamentos e a participação ativa nas sequências corporais.",
+  comunicacaoLinguagem: "A intervenção buscou ampliar a intencionalidade comunicativa, a compreensão de comandos, a solicitação, a imitação verbal ou gestual e a participação em trocas comunicativas mais funcionais, respeitando o repertório atual da criança e o nível de suporte necessário.",
+  cognicaoAprendizagem: "A proposta favoreceu habilidades relacionadas à atenção, permanência, pareamento, classificação, memória operacional, sequência lógica, discriminação de estímulos e resolução gradual de demandas, com foco na organização cognitiva e na autonomia de resposta.",
+  habilidadesBasicas: "A intervenção buscou fortalecer repertórios básicos como permanência, espera, resposta ao nome, contato visual funcional, imitação, seguimento de comandos simples, solicitação e participação em demandas curtas, com redução progressiva dos suportes conforme a resposta apresentada.",
+  regulacaoSocioemocional: "A condução terapêutica priorizou previsibilidade, combinados objetivos, tolerância à frustração, espera, flexibilidade, aceitação de limites e retomada da atividade após mediação, favorecendo maior organização comportamental diante das demandas propostas.",
+  interacaoBrincar: "A proposta favoreceu turnos de troca, reciprocidade, brincar compartilhado, imitação social, atenção conjunta e maior disponibilidade para interação, buscando ampliar a qualidade das trocas e a participação da criança em atividades com o outro.",
+  integracaoSensorial: "A intervenção considerou respostas de modulação sensorial, organização corporal e processamento de estímulos proprioceptivos, vestibulares, táteis, auditivos e visuais, ajustando intensidade e duração das demandas para favorecer participação mais organizada.",
+  autonomiaAVDs: "A proposta buscou ampliar independência funcional, participação nas rotinas, organização sequencial, iniciativa e redução de suporte nas atividades de vida diária, considerando o nível atual de autonomia e a necessidade de treino funcional gradual.",
+  expressaoMusicalCorporal: "A intervenção favoreceu expressão musical, corporal e criativa, ritmo, pulso, imitação rítmica, escuta ativa, expressão vocal e participação instrumental ou corporal, utilizando a música como mediadora da comunicação, do engajamento e da organização da resposta."
+};
+
+
+function detectarModeloPorTexto() {
+  const texto = [
+    valor(campos.modeloHabilidade),
+    valor(campos.objetivo),
+    valor(campos.atividade),
+    valor(campos.area)
+  ].join(" ").toLowerCase();
+
+  const regras = [
+    {
+      chave: "motricidadeAmpla",
+      termos: ["motricidade ampla", "motor amplo", "coordenação ampla", "coordenacao ampla", "circuito motor", "equilíbrio", "equilibrio", "lateralidade", "controle postural", "planejamento motor", "força do core", "forca do core", "obstáculos", "obstaculos", "salto", "corrida"]
+    },
+    {
+      chave: "motricidadeFina",
+      termos: ["motricidade fina", "motor fino", "coordenação manual", "coordenacao manual", "coordenação olho-mão", "coordenacao olho-mao", "preensão", "preensao", "pinça", "pinca", "recorte", "pintura", "encaixe", "grafomotricidade", "pequenos objetos"]
+    },
+    {
+      chave: "habilidadesBasicas",
+      termos: ["habilidades básicas", "habilidades basicas", "comandos simples", "seguimento de comandos", "resposta ao nome", "permanência", "permanencia", "espera", "imitação", "imitacao", "solicitação", "solicitacao", "pareamento", "contato visual"]
+    },
+    {
+      chave: "comunicacaoLinguagem",
+      termos: ["comunicação", "comunicacao", "linguagem", "fala", "vocalização", "vocalizacao", "intenção comunicativa", "intencao comunicativa", "solicitar", "nomeação", "nomeacao", "caa", "comunicação alternativa", "comunicacao alternativa"]
+    },
+    {
+      chave: "cognicaoAprendizagem",
+      termos: ["cognição", "cognicao", "aprendizagem", "atenção", "atencao", "pareamento", "classificação", "classificacao", "memória", "memoria", "sequência lógica", "sequencia logica", "alfabetização", "alfabetizacao", "pré-requisito", "pre-requisito"]
+    },
+    {
+      chave: "regulacaoSocioemocional",
+      termos: ["regulação", "regulacao", "socioemocional", "comportamento", "tolerância", "tolerancia", "frustração", "frustracao", "controle inibitório", "controle inibitorio", "rigidez", "transição", "transicao", "choro", "crise", "oposição", "oposicao"]
+    },
+    {
+      chave: "interacaoBrincar",
+      termos: ["interação social", "interacao social", "brincar", "brincadeira", "faz de conta", "turnos", "reciprocidade", "atenção conjunta", "atencao conjunta", "troca com pares", "brincar compartilhado"]
+    },
+    {
+      chave: "integracaoSensorial",
+      termos: ["integração sensorial", "integracao sensorial", "sensorial", "propriocepção", "propriocepcao", "vestibular", "tátil", "tatil", "auditivo", "visual", "modulação sensorial", "modulacao sensorial", "busca sensorial", "evitação sensorial", "evitacao sensorial"]
+    },
+    {
+      chave: "autonomiaAVDs",
+      termos: ["avd", "avds", "atividade de vida diária", "atividades de vida diária", "atividade de vida diaria", "atividades de vida diaria", "autonomia", "higiene", "alimentação", "alimentacao", "desfralde", "vestir", "rotina", "independência funcional", "independencia funcional"]
+    },
+    {
+      chave: "expressaoMusicalCorporal",
+      termos: ["musicoterapia", "música", "musica", "ritmo", "pulso", "canto", "expressão vocal", "expressao vocal", "instrumentos musicais", "imitação rítmica", "imitacao ritmica", "escuta ativa", "expressão corporal", "expressao corporal"]
+    }
+  ];
+
+  for (const regra of regras) {
+    if (regra.termos.some((termo) => texto.includes(termo))) {
+      return regra.chave;
+    }
+  }
+
+  return "";
+}
+
 function valor(campo) {
   return campo.value.trim();
+}
+
+function nomePaciente() {
+  return valor(campos.paciente) || "A criança";
 }
 
 function formatarData(dataISO) {
@@ -100,131 +178,172 @@ function formatarData(dataISO) {
   return `${dia}/${mes}/${ano}`;
 }
 
-function perfilAtual() {
-  return perfisPorArea[valor(campos.area)] || {
-    abertura: "No atendimento terapêutico, foi realizada uma proposta estruturada",
-    focoPadrao: "habilidades terapêuticas previamente definidas",
-    meio: "Foram observados o nível de participação, a necessidade de suporte, a resposta à mediação e a continuidade da proposta.",
-    continuidade: "A continuidade do trabalho deve priorizar atividades graduadas, ajustando o nível de suporte conforme a resposta apresentada."
-  };
+function aplicarModelo(chave) {
+  const modelo = modelos[chave];
+  if (!modelo) return;
+
+  campos.objetivo.value = modelo.objetivo || "";
+  campos.atividade.value = modelo.atividade || "";
+  campos.comportamento.value = modelo.comportamento || "";
+  campos.resposta.value = modelo.resposta || "";
+  campos.observacao.value = modelo.observacao || "";
 }
 
-function limparEntrada(texto) {
-  return texto
+function limparTexto(texto) {
+  return (texto || "")
     .trim()
-    .replace(/^trabalhamos\s+/i, "")
-    .replace(/^foi trabalhado\s+/i, "")
-    .replace(/^foi trabalhada\s+/i, "")
+    .replace(/\s+/g, " ")
+    .replace(/\s+\./g, ".")
     .replace(/^com foco em\s+/i, "")
-    .replace(/^por meio de\s+/i, "")
-    .replace(/^através de\s+/i, "")
-    .replace(/^a criança\s+/i, "")
-    .replace(/^o paciente\s+/i, "")
-    .replace(/^a paciente\s+/i, "")
-    .replace(/^chegou\s+chegou\s+/i, "chegou ")
-    .replace(/\s+/g, " ");
+    .replace(/^trabalhar\s+/i, "")
+    .replace(/^trabalho de\s+/i, "")
+    .replace(/^o trabalho de\s+/i, "");
 }
 
-function primeiraMaiuscula(texto) {
+function minusculaInicial(texto) {
+  texto = limparTexto(texto);
   if (!texto) return "";
-  return texto.charAt(0).toUpperCase() + texto.slice(1);
+  return texto.charAt(0).toLowerCase() + texto.slice(1);
 }
 
-function frase(texto) {
-  texto = limparEntrada(texto);
+function pontuar(texto) {
+  texto = limparTexto(texto);
   if (!texto) return "";
-  texto = texto.replace(/[.!?]+$/g, "");
-  return texto + ".";
+  return /[.!?]$/.test(texto) ? texto : texto + ".";
 }
 
-function nomePaciente() {
-  return valor(campos.paciente) || "A criança";
+function fraseComNome(paciente, texto) {
+  texto = limparTexto(texto);
+  if (!texto) return "";
+  if (texto.toLowerCase().startsWith(paciente.toLowerCase())) return pontuar(texto);
+  return pontuar(`${paciente} ${minusculaInicial(texto)}`);
 }
 
-function montarCabecalho() {
-  const profissional = valor(campos.profissional);
-  const area = valor(campos.area);
-  const data = formatarData(valor(campos.data));
+function montarAbertura(area, atividade, objetivo, tecnico) {
+  atividade = limparTexto(atividade);
+  objetivo = limparTexto(objetivo);
 
-  if (!data && !profissional && !area) return "";
+  let abertura = tecnico
+    ? (area ? `No atendimento de ${area}, foi desenvolvida uma proposta terapêutica estruturada` : "Foi desenvolvida uma proposta terapêutica estruturada")
+    : (area ? `Na área de ${area}, foi realizada uma proposta terapêutica` : "Foi realizada uma proposta terapêutica");
 
-  return [
-    data ? `Data: ${data}` : "",
-    profissional ? `Profissional: ${profissional}` : "",
-    area ? `Área: ${area}` : ""
-  ].filter(Boolean).join(" | ") + "\n\n";
+  if (atividade) abertura += ` com ${minusculaInicial(atividade)}`;
+  if (objetivo) abertura += `, com foco em ${minusculaInicial(objetivo)}`;
+
+  return pontuar(abertura);
+}
+
+function montarRespostaBreve(resposta) {
+  let resp = limparTexto(resposta);
+  if (!resp) return "";
+
+  if (/^(durante|ao longo|após|em seguida|na atividade|no decorrer|com mediação|com suporte)/i.test(resp)) {
+    return pontuar(resp);
+  }
+
+  return pontuar(`Durante a proposta, ${minusculaInicial(resp)}`);
+}
+
+function montarRespostaTecnica(resposta) {
+  let resp = limparTexto(resposta);
+  if (!resp) return "";
+
+  if (/^(durante|ao longo|após|em seguida|na atividade|no decorrer)/i.test(resp)) {
+    return pontuar(resp);
+  }
+
+  if (/^(participou|realizou|cumpriu|aceitou|manteve|respondeu|executou|conseguiu|finalizou)/i.test(resp)) {
+    return pontuar(`Com mediação terapêutica inicial, ${minusculaInicial(resp)}, mantendo-se vinculado à proposta dentro do nível de suporte necessário para o momento`);
+  }
+
+  return pontuar(`Com mediação terapêutica inicial, observou-se que ${minusculaInicial(resp)}`);
+}
+
+function montarResultado(resultadoCampo, tecnico) {
+  let texto = limparTexto(resultadoCampo);
+  if (!texto) return "";
+
+  if (/^(não|nao)\s+/.test(texto.toLowerCase())) {
+    return pontuar(`Como resultado da sessão, ${minusculaInicial(texto)}, sendo necessária a manutenção de suporte terapêutico para retomada gradual dos objetivos propostos`);
+  }
+
+  if (/^(cumpriu|realizou|aceitou|participou|conseguiu|manteve|finalizou|respondeu|executou|alcançou|alcancou|concluiu|concluiu parcialmente)/i.test(texto)) {
+    return tecnico
+      ? pontuar(`Como resultado da sessão, ${minusculaInicial(texto)}, indicando resposta compatível com o nível de suporte ofertado durante a proposta`)
+      : pontuar(`Como resultado, ${minusculaInicial(texto)}`);
+  }
+
+  return tecnico
+    ? pontuar(`Como resultado da sessão, observou-se que ${minusculaInicial(texto)}`)
+    : pontuar(`Como resultado, ${minusculaInicial(texto)}`);
 }
 
 function gerarBreve() {
-  const perfil = perfilAtual();
   const paciente = nomePaciente();
-  const objetivo = limparEntrada(valor(campos.objetivo));
-  const atividade = limparEntrada(valor(campos.atividade));
-  const comportamento = limparEntrada(valor(campos.comportamento));
-  const resposta = limparEntrada(valor(campos.resposta));
-  const resultadoSessao = limparEntrada(valor(campos.observacao));
+  const area = valor(campos.area);
+  const objetivo = valor(campos.objetivo);
+  const atividade = valor(campos.atividade);
+  const comportamento = valor(campos.comportamento);
+  const resposta = valor(campos.resposta);
+  const resultadoSessao = valor(campos.observacao);
 
-  let texto = perfil.abertura;
+  const partes = [];
 
-  if (atividade) {
-    texto += `, por meio de ${atividade}`;
-  }
+  partes.push(montarAbertura(area, atividade, objetivo, false));
 
-  texto += `, com foco em ${objetivo || perfil.focoPadrao}. `;
+  if (comportamento) partes.push(fraseComNome(paciente, comportamento));
+  if (resposta) partes.push(montarRespostaBreve(resposta));
+  if (resultadoSessao) partes.push(montarResultado(resultadoSessao, false));
 
-  if (comportamento) {
-    texto += `${paciente} ${frase(comportamento)}`;
-    texto += " ";
-  }
-
-  if (resposta) {
-    texto += `Durante a proposta, ${frase(resposta)}`;
-    texto += " ";
-  }
-
-  if (resultadoSessao) {
-    texto += `Ao final, ${frase(resultadoSessao)}`;
-  }
-
-  resultado.textContent = texto.trim();
+  resultado.textContent = partes.filter(Boolean).join(" ");
 }
 
 function gerarTecnica() {
-  const perfil = perfilAtual();
   const paciente = nomePaciente();
-  const objetivo = limparEntrada(valor(campos.objetivo));
-  const atividade = limparEntrada(valor(campos.atividade));
-  const comportamento = limparEntrada(valor(campos.comportamento));
-  const resposta = limparEntrada(valor(campos.resposta));
-  const resultadoSessao = limparEntrada(valor(campos.observacao));
+  const profissional = valor(campos.profissional);
+  const area = valor(campos.area);
+  const data = formatarData(valor(campos.data));
+  const objetivo = valor(campos.objetivo);
+  const atividade = valor(campos.atividade);
+  const comportamento = valor(campos.comportamento);
+  const resposta = valor(campos.resposta);
+  const modeloSelecionado = valor(campos.modeloHabilidade) || detectarModeloPorTexto();
+  const resultadoSessao = valor(campos.observacao);
 
-  let texto = montarCabecalho();
-
-  texto += perfil.abertura;
-
-  if (atividade) {
-    texto += `, por meio de ${atividade}`;
+  let cabecalho = "";
+  if (data || profissional || area) {
+    cabecalho = [
+      data ? `Data: ${data}` : "",
+      profissional ? `Profissional: ${profissional}` : "",
+      area ? `Área: ${area}` : ""
+    ].filter(Boolean).join(" | ") + "\n\n";
   }
 
-  texto += `, com foco em ${objetivo || perfil.focoPadrao}. `;
+  const partes = [];
 
-  texto += `${perfil.meio} `;
+  partes.push(montarAbertura(area, atividade, objetivo, true));
 
   if (comportamento) {
-    texto += `${paciente} ${frase(comportamento)} `;
+    partes.push(fraseComNome(paciente, comportamento));
   }
 
   if (resposta) {
-    texto += `Durante o desenvolvimento da atividade, ${frase(resposta)} `;
+    partes.push(montarRespostaTecnica(resposta));
+  } else {
+    partes.push("A condução da sessão considerou o nível de prontidão, a necessidade de suporte e a resposta apresentada pela criança diante das demandas propostas.");
+  }
+
+  if (modeloSelecionado && fechamentosTecnicos[modeloSelecionado]) {
+    partes.push(fechamentosTecnicos[modeloSelecionado]);
+  } else if (objetivo) {
+    partes.push(pontuar(`A intervenção buscou favorecer respostas relacionadas a ${minusculaInicial(objetivo)}, ajustando o nível de suporte conforme o desempenho apresentado em sessão`));
   }
 
   if (resultadoSessao) {
-    texto += `Ao final da sessão, ${frase(resultadoSessao)} `;
-  } else {
-    texto += perfil.continuidade;
+    partes.push(montarResultado(resultadoSessao, true));
   }
 
-  resultado.textContent = texto.trim();
+  resultado.textContent = cabecalho + partes.filter(Boolean).join(" ");
 }
 
 function limparCampos() {
@@ -235,12 +354,14 @@ function limparCampos() {
       campo.value = "";
     }
   });
+
   resultado.textContent = "A evolução aparecerá aqui após o preenchimento.";
   feedbackCopia.textContent = "";
 }
 
 async function copiarTexto() {
   const texto = resultado.textContent.trim();
+
   if (!texto || texto === "A evolução aparecerá aqui após o preenchimento.") {
     feedbackCopia.textContent = "Gere uma evolução antes de copiar.";
     return;
@@ -254,63 +375,7 @@ async function copiarTexto() {
   }
 }
 
-const modelos = {
-  motor: {
-    area: "Terapia Ocupacional",
-    objetivo: "motricidade ampla, lateralidade, organização corporal e seguimento de comandos",
-    atividade: "circuito motor estruturado com obstáculos e comandos direcionados",
-    comportamento: "chegou bem e apresentou boa adesão inicial",
-    resposta: "participou da sequência proposta, necessitando de suporte verbal pontual para manutenção da trajetória",
-    observacao: "cumpriu as demandas propostas, mantendo participação adequada ao objetivo da sessão"
-  },
-  comunicacao: {
-    area: "Fonoaudiologia",
-    objetivo: "comunicação funcional, intenção comunicativa e ampliação de respostas verbais ou gestuais",
-    atividade: "atividade lúdica mediada com solicitação de objetos, turnos e reforços sociais",
-    comportamento: "apresentou oscilação na iniciativa comunicativa",
-    resposta: "respondeu melhor quando houve antecipação, apoio visual e mediação verbal",
-    observacao: "realizou trocas comunicativas com suporte, demonstrando possibilidade de ampliação do repertório funcional"
-  },
-  regulacao: {
-    area: "Psicologia",
-    objetivo: "regulação comportamental, tempo de permanência e tolerância à frustração",
-    atividade: "atividade estruturada com alternância entre demanda e reforço",
-    comportamento: "necessitou de suporte para aceitar transições",
-    resposta: "conseguiu retomar a proposta após redirecionamento",
-    observacao: "finalizou a atividade com menor resistência após mediação"
-  },
-  fina: {
-    area: "Terapia Ocupacional",
-    objetivo: "motricidade fina, percepção visual, coordenação olho-mão e controle de força",
-    atividade: "atividade de encaixe, quebra-cabeça e manipulação de pequenos objetos",
-    comportamento: "chegou bem ao atendimento",
-    resposta: "participou da atividade, com necessidade de redirecionamento pontual em momentos de busca por atenção",
-    observacao: "cumpriu as demandas propostas e finalizou a sequência com apoio verbal"
-  },
-  musica: {
-    area: "Musicoterapia",
-    objetivo: "atenção compartilhada, imitação, comunicação e organização da resposta pela música",
-    atividade: "canções estruturadas, instrumentos musicais e pausas intencionais para favorecer participação",
-    comportamento: "apresentou boa resposta aos estímulos musicais",
-    resposta: "demonstrou engajamento por meio de respostas vocais, corporais e instrumentais",
-    observacao: "manteve participação nos momentos musicais com mediação do terapeuta"
-  }
-};
-
-document.querySelectorAll("[data-template]").forEach((botao) => {
-  botao.addEventListener("click", () => {
-    const modelo = modelos[botao.dataset.template];
-    if (!modelo) return;
-
-    campos.area.value = modelo.area || "";
-    campos.objetivo.value = modelo.objetivo || "";
-    campos.atividade.value = modelo.atividade || "";
-    campos.comportamento.value = modelo.comportamento || "";
-    campos.resposta.value = modelo.resposta || "";
-    campos.observacao.value = modelo.observacao || "";
-  });
-});
-
+campos.modeloHabilidade.addEventListener("change", (event) => aplicarModelo(event.target.value));
 document.getElementById("gerarBreve").addEventListener("click", gerarBreve);
 document.getElementById("gerarTecnica").addEventListener("click", gerarTecnica);
 document.getElementById("limparCampos").addEventListener("click", limparCampos);
